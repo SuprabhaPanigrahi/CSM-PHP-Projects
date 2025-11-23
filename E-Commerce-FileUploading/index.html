@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E Commerce Application</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center text-primary">Image Uploading</h1>
+      <div class="card border border-dark p-3">
+        <form enctype="multipart/form-data">
+          <label for="name" class="form-label">Name :</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control mb-3"
+            placeholder="Enter Name"
+          />
+          <label for="price" class="form-label">Price :</label>
+          <input
+            type="number"
+            class="form-control mb-3"
+            id="price"
+            name="price"
+            placeholder="Enter price"
+          />
+          <label for="photo" class="form-label">Upload Image :</label>
+          <input
+            type="file"
+            id="photo"
+            name="photo"
+            class="form-control mb-3"
+          />
+          <button
+            type="submit"
+            class="btn btn-success mt-3 justify-content-center"
+          >
+            Save
+          </button>
+          <hr />
+          <div>
+            <img src="" alt="" />
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $("form").on("submit", function (e) {
+          e.preventDefault();
+
+          let productName = $("#name").val();
+          let productPrice = $("#price").val();
+          let productImage = $("#photo")[0].files[0];
+
+          // console.log("Image", productImage);
+          // console.log("Image Path", URL.createObjectURL(file));
+          // console.log("name", productName);
+          // console.log("file", file);
+          // console.log("file Name", file.name);
+          // console.log("file Size", file.size);
+          // console.log("file Type", file.type);
+          // let extension = file.name.substring(file.name.lastIndexOf(".") + 1);
+          // console.log("Extension of the file", extension);
+
+          // let permissableFiles = ["png", "jpg", "jpeg", "avif"];
+          // let path = URL.createObjectURL($("#photo")[0]["productImage"][0]);
+          // 8 bit -> 1 byte
+          // 1024 bytes(2^10) -> 1 KB
+          // 1024 KB    -> 1 MB
+          // file.size * 1024 * 1024
+          // if (permissableFiles.includes(extension)) {
+          //   if (file.size / (1024 * 1024) < 5) {
+          //     $("img").attr("src", path);
+          //   } else {
+          //     alert("image size exceeds more that 3 MB");
+          //   }
+          // } else {
+          //   alert("Invalid Image type");
+          // }
+
+          let formData = new FormData();
+          formData.append("name", productName);
+          formData.append("price", productPrice);
+          formData.append("image", productImage);
+
+          $.ajax({
+            url: "server/process-uploaded-files.php",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              console.log(response);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        });
+      });
+
+      // function getUsers() {
+      //   $.ajax({
+      //     url: "server/get-users.php",
+      //     type: "GET",
+
+      //     success: function (response) {
+      //       let users = JSON.parse(response);
+      //       let rows = "";
+      //       for (let user of users) {
+      //         rows += `<tr>
+      //           <td>${user["id"]}</td>
+      //           <td>${user["name"]}</td>
+      //           <td><img src='server/uploads/${user["image"]}' alt=''/></td>
+      //           </tr>`;
+      //       }
+      //       $("#user-data").html(rows);
+      //       //console.log(response);
+      //     },
+      //   });
+      // }
+    </script>
+  </body>
+</html>

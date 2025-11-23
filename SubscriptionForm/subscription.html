@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Subscription Form</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f2f4f8;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            background: #0d6efd;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -25px -25px 25px -25px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h3 class="m-0">Subscription Form</h3>
+        </div>
+
+        <form method="post" action="" id="subscription_form">
+
+            <!-- Subscription Name -->
+            <div class="mb-3">
+                <label class="form-label">Subscription Name</label>
+                <input type="text" name="subscription_name" id="subscription_name" class="form-control" required>
+            </div>
+
+            <!-- Subscriber Email -->
+            <div class="mb-3">
+                <label class="form-label">Subscriber Email</label>
+                <input type="email" name="subscriber_email" id="subscriber_email" class="form-control" required>
+            </div>
+
+            <!-- Subscriber Phone -->
+            <div class="mb-3">
+                <label class="form-label">Subscriber Phone</label>
+                <input type="text" name="subscriber_phone" id="subscriber_phone" class="form-control" required>
+            </div>
+
+            <!-- Choose Plan -->
+            <div class="mb-3">
+                <label class="form-label">Choose Plan</label>
+                <select class="form-select" name="plan_id" id="plan_id" required>
+                    <option value="" selected disabled>-- Select a Plan --</option>
+
+                </select>
+            </div>
+
+            <!-- Dates -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">End Date</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" name="status" required>
+                    <option value="active">Active</option>
+                    <option value="suspended">Suspended</option>
+                    <option value="expired">Expired</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Submit Subscription</button>
+
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            // Fetch plans
+            $.ajax({
+                url: 'process_fetch_plan.php',
+                method: 'GET',
+                success: function (response) {
+                    let plans = JSON.parse(response);
+                    for (let i in plans) {
+                        $('#plan_id').append(`<option value="${plans[i]['plan_id']}">${plans[i]['name']}</option>`);
+                    }
+                },
+                error: function (error) {
+                    console.error("Error fetching plans", error);
+                }
+            });
+
+            $("#subscription_form").submit(function (e) {
+                e.preventDefault();
+
+                let subscription_name = $("#subscription_name").val();
+                let subscriber_email = $("#subscriber_email").val();
+                let subscriber_phone = $("#subscriber_phone").val();
+                let plan_id = $("#plan_id").val();
+                let start_date = $("#start_date").val();
+                let end_date = $("#end_date").val();
+                let status = $("select[name='status']").val();
+
+                // Step 1: Insert Subscriber
+                $.ajax({
+                    url: "process_subscriber.php",
+                    method: "POST",
+                    data: {
+                        subscription_name: subscription_name,
+                        subscriber_email: subscriber_email,
+                        subscriber_phone: subscriber_phone
+                    },
+                    success: function (subscriber_id) {
+                        if (subscriber_id.startsWith("ERROR")) {
+                            alert("Failed to insert subscriber: " + subscriber_id);
+                            return;
+                        }
+
+                        // Step 2: Insert Subscription
+                        $.ajax({
+                            url: "process_subscription.php",
+                            method: "POST",
+                            data: {
+                                subscriber_id: subscriber_id,
+                                plan_id: plan_id,
+                                start_date: start_date,
+                                end_date: end_date,
+                                status: status
+                            },
+                            success: function (subscription_id) {
+                                console.log("Subscription ID:", subscription_id); // Debug
+                                if (subscription_id == 0 || subscription_id.startsWith("ERROR")) {
+                                    alert("Subscription insert failed: " + subscription_id);
+                                    return; // Stop further inserts
+                                }
+
+                                // Proceed to transaction insert
+                                $.ajax({
+                                    url: "process_transaction.php",
+                                    method: "POST",
+                                    data: {
+                                        subscriber_id: subscriber_id,
+                                        subscription_id: subscription_id,
+                                        plan_id: plan_id,
+                                        start_date: start_date,
+                                        end_date: end_date
+                                    },
+                                    success: function (result) {
+                                        console.log("Transaction result:", result);
+                                        alert("Transaction Debug: " + result);
+                                    }
+                                });
+
+                            }
+
+                        });
+
+                    },
+                    error: function (err) {
+                        console.error("Subscriber error", err);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

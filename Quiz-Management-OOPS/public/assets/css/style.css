@@ -1,0 +1,5 @@
+/* public/assets/css/style.css */
+body { font-family: Arial, sans-serif; margin:20px; }
+header h1 { margin:0; }
+nav a { margin-right:10px; }
+.question { background:#f9f9f9; padding:10px; border-radius:6px; }

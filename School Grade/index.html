@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grade Sheet Calculator</title>
+</head>
+<body>
+    <h2>Student Grade Sheet Calculator</h2>
+    <form action="result.php" method="POST">
+        <label>Student Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>Subject 1 Marks:</label><br>
+        <input type="number" name="subject1" min="0" max="100" required><br><br>
+
+        <label>Subject 2 Marks:</label><br>
+        <input type="number" name="subject2" min="0" max="100" required><br><br>
+
+        <label>Subject 3 Marks:</label><br>
+        <input type="number" name="subject3" min="0" max="100" required><br><br>
+
+        <label>Subject 4 Marks:</label><br>
+        <input type="number" name="subject4" min="0" max="100" required><br><br>
+
+        <label>Subject 5 Marks:</label><br>
+        <input type="number" name="subject5" min="0" max="100" required><br><br>
+
+        <input type="submit" value="Calculate Result">
+    </form>
+</body>
+</html>
