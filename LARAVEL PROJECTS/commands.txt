@@ -1,0 +1,38 @@
+composer create-project laravel/laravel projectname
+composer create-project "laravel/laravel:^10.0" student-mgmt-fileuploading
+
+php artisan make:migration create_users_table 
+
+php artisan migrate
+
+php artisan migrate:rollback
+
+Fresh database (drop + migrate)
+    php artisan migrate:fresh
+
+Fresh + seed
+    php artisan migrate:fresh --seed
+
+Run specific migration path
+    php artisan migrate --path=/database/migrations/myfile.php
+
+Create seeder
+    php artisan make:seeder UserSeeder
+
+Run seeder
+    php artisan db:seed
+    php artisan db:seed --class=UserSeeder
+
+php artisan make:factory UserFactory
+
+Create model
+    php artisan make:model Post
+
+Model + migration + factory + seeder + controller
+    php artisan make:model Post -mfscr
+
+Create controller
+    php artisan make:controller UserController
+
+Create middleware
+    php artisan make:middleware CheckRole
