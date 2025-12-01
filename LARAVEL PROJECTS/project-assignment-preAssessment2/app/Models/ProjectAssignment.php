@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProjectAssignment extends Model
 {
@@ -21,12 +22,12 @@ class ProjectAssignment extends Model
         'AllocationPercent' => 'decimal:2'
     ];
 
-    public function project()
+    public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class, 'ProjectId');
     }
 
-    public function employee()
+    public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class, 'EmployeeId');
     }

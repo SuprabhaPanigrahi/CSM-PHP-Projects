@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
@@ -12,12 +14,18 @@ class Project extends Model
     protected $primaryKey = 'ProjectId';
     protected $fillable = ['ProjectCode', 'ProjectName', 'TeamId', 'IsBillable', 'Status', 'StartDate', 'EndDate'];
 
-    public function team()
+    protected $casts = [
+        'IsBillable' => 'boolean',
+        'StartDate' => 'date',
+        'EndDate' => 'date'
+    ];
+
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'TeamId');
     }
 
-    public function projectAssignments()
+    public function projectAssignments(): HasMany
     {
         return $this->hasMany(ProjectAssignment::class, 'ProjectId');
     }
