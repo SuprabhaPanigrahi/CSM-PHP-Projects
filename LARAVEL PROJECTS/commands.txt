@@ -36,3 +36,14 @@ Create controller
 
 Create middleware
     php artisan make:middleware CheckRole
+
+
+
+
+
+
+
+
+
+
+
