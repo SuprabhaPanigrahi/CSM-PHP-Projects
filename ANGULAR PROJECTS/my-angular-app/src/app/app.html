@@ -1,0 +1,47 @@
+<h1 class="text-danger text-center p-5 bg-dark text-uppercase">
+  {{ title }}
+</h1>
+
+<hr>
+
+<div>
+  <input
+    type="text"
+    placeholder="Enter Your Task"
+    class="form-control w-50 mx-auto d-block mb-3"
+    #taskInput
+  >
+
+  <button
+    class="btn btn-primary d-block mx-auto mb-5"
+    (click)="addTask(taskInput.value); taskInput.value=''"
+  >
+    Add Task
+  </button>
+</div>
+
+<div>
+  <h2 class="text-center text-success">Task List</h2>
+
+  <ul class="list-group w-50 mx-auto">
+
+    @for (task of taskList; track task; let i = $index) {
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ i + 1 }} - {{ task }}
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteTask(i)"
+        >
+          Delete
+        </button>
+      </li>
+    }
+
+    @empty {
+      <li class="list-group-item text-center text-muted">
+        No Record
+      </li>
+    }
+
+  </ul>
+</div>
