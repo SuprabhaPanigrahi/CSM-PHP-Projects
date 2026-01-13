@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TodoApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+
+
+
+Table: employees
++----+----------+------------+--------+------------+--------+
+| id | name     | department | salary | city       | age    |
++----+----------+------------+--------+------------+--------+
+| 1  | Amit     | IT         | 60000  | Delhi      | 28     |
+| 2  | Neha     | HR         | 45000  | Mumbai     | 32     |
+| 3  | Rahul    | IT         | 70000  | Delhi      | 35     |
+| 4  | Priya    | Finance    | 50000  | Pune       | 29     |
+| 5  | Rohit    | HR         | 48000  | Mumbai     | 26     |
+| 6  | Anjali   | IT         | 60000  | Bangalore  | 31     |
++----+----------+------------+--------+------------+--------+
+
+select * from employees order by salary desc limit 5 offset 1;
+
+select * from employees order by salary desc limit 2 offset 8;
+
+select * from employees order by age asc limit 2 offset 3;
+
+select * from employees order by id asc limit 3 offset 5;
+
+select * from employees order by salary desc limit 1 offset 3; 
+
+
+

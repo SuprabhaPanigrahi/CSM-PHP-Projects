@@ -1,0 +1,8 @@
+<div>
+    <h1>USER FORM</h1>
+    <hr/> 
+    <label for="username">Username: </label>
+    <input type="text" value="{{name}}" [disabled]="isDisabled" id="username" name="username" />
+    <button (click)="changeName()">Change Name</button>
+    <button (click)="toggle()">Toggle</button>
+</div>

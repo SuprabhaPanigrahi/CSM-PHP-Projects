@@ -1,0 +1,20 @@
+<!-- {{products | json}} -->
+<table [class]="applyClass">
+  <thead>
+    <tr [style]="headingStyle">
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{product.id}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.price | currency}}</td>
+    </tr>
+    <tr>
+      <td [attr.colspan]="colspanCount">XYZ</td>
+    </tr>
+  </tbody>
+  <button (click)="updateColSPan(2)">Change</button>

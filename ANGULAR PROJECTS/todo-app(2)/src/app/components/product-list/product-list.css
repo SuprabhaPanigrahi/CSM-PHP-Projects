@@ -1,0 +1,21 @@
+.tbl{
+    width: 100%;
+    border-collapse: collapse;
+    tr{
+        border: 1px solid black;
+        th,td{
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    }
+}
+
+.font-red{
+    color: red;
+}
+
+.back-colr{
+    background-color: yellow;
+}
+

@@ -1,0 +1,25 @@
+<div>
+   <h1>Todo App </h1>
+   <hr/>
+   <div id="task-form">
+      <input type="text" id="new-task-input" [value]="taskToEdit" placeholder="Enter new task" #task />
+      @if(isEdit){
+          <button id="update-task-button" (click)="updateTask(task.value)">update Task</button>
+      }@else{
+         <button id="add-task-button" (click)="addTask(task.value)">Add Task</button>
+      }
+     
+     
+   </div>
+   <div id="task-list">
+      <ul id="tasks-ul">
+          @for(task of tasks;track task;let i=$index){
+             <li>
+              {{task}}
+              <button (click)="editTask(i)" >Edit</button>
+              <button (click)="deleteTask(i)" >Delete</button>
+            </li>
+          }
+      </ul>
+   </div>
+</div>

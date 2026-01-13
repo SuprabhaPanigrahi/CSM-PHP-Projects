@@ -1,0 +1,31 @@
+ <h1>Employee Form</h1>
+
+<hr/>
+
+<div>
+   <!-- <label>Name:</label>
+   <input [value]="name" (change)="updateName($event.target.value)" type="text" />
+   <input [(ngModel)]="designation"  type="text" />
+    <button>Change</button> -->
+   <!-- <p>{{name}}</p>
+   <p>{{designation}}</p> -->
+   <div>
+      <label>Name:  </label>
+      <input [(ngModel)]="employeeObj.name" type="text" />
+      <br/>
+      <label>Email</label>
+      <input [(ngModel)]="employeeObj.email" type="email" />
+      <br/>
+      <label>Phone</label>
+      <input [(ngModel)]="employeeObj.phone" type="tel" />
+      <br/>
+      <button (click)="save()">Submit</button>
+   </div>
+   <div>
+     @for(emp of employees;track emp){
+        <p>{{emp.name}} - {{emp.email}} - {{emp.phone}}</p>
+     }@empty {
+      <p>No employees found.</p>
+     }
+   </div>
+</div>

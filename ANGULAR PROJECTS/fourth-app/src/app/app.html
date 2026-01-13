@@ -1,0 +1,42 @@
+<h1 class="text-center text-info">{{ title }}</h1>
+
+<h2>PRICE:{{ price }}</h2>
+<br>
+
+<h2>STATUS:{{ status }}</h2>
+<br>
+<h2>NUMBERS:{{ numbers }}</h2>
+<br>
+<h2>NAMES :{{ names }}</h2>
+<br>
+<h2>STUDENT1:{{ student1.name }}{{student1.course  }}</h2>
+<br>
+<h2>STUDENT2:{{ strudent2|json }}</h2>
+<br>
+<h2>STUDENT3:{{ student3|json }}</h2>
+
+<hr/>
+
+<ol>
+  <li *ngFor="let n of courses">{{ n }}</li>
+</ol>
+
+<hr/>
+
+<ol>
+  @for(course of courses;track course) {
+    <li>{{course}}</li>
+  }
+  
+</ol>
+
+<hr/>
+<h1>CATEGORIES LIST</h1>
+<hr/>
+@for(category of categories; track category.slug) {
+  <div class="card">
+     <div>{{category.slug }}</div>
+     <div>{{ category.name }}</div>
+     <div><img src="{{ category.url }}" alt=""></div>
+  </div>
+}
